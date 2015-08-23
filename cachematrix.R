@@ -1,7 +1,7 @@
 ## Matrix object with a cached inverse function
 
 ## Create a matrix object with support for cached inverse calculation
-## Usabe example: m <- makeCacheMatrix(matrix(1:9, 3, 3))
+## Usabe example: m <- makeCacheMatrix(matrix(1:4, 2, 2))
 makeCacheMatrix <- function(x = matrix()) {
     inverse <- NULL
     set <- function(y) {
@@ -18,7 +18,17 @@ makeCacheMatrix <- function(x = matrix()) {
 
 
 ## Calculate the inverse of matrix x, using a cache if inverse has been previously calculated.
+## Usage example: m$get() %*% cacheSolve(m)
 cacheSolve <- function(x, ...) {
-
-            ## Return a matrix that is the inverse of 'x'
+    inverse <- x$getInverse()
+    if(!is.null(inverse)) {
+        message("using cached data")
+    }
+    else {
+        data <- x$get()
+        inverse <- solve(data, ...)
+        x$setInverse(inverse)
+    }
+    ## Return a matrix that is the inverse of 'x'
+    inverse
 }
