@@ -3,7 +3,10 @@
 ## Create a matrix object with support for cached inverse calculation
 ## Usabe example: m <- makeCacheMatrix(matrix(1:4, 2, 2))
 makeCacheMatrix <- function(x = matrix()) {
+    # storage for cache inverse
     inverse <- NULL
+
+    # setters and getters
     set <- function(y) {
         x <<- y
         inverse <<- NULL
@@ -11,6 +14,8 @@ makeCacheMatrix <- function(x = matrix()) {
     get <- function() x
     setInverse <- function(inv) inverse <<- inv
     getInverse <- function() inverse
+
+    # create object
     list(set = set, get = get,
          setInverse = setInverse,
          getInverse = getInverse)
@@ -29,6 +34,6 @@ cacheSolve <- function(x, ...) {
         inverse <- solve(data, ...)
         x$setInverse(inverse)
     }
-    ## Return a matrix that is the inverse of 'x'
+    # return a matrix that is the inverse of 'x'
     inverse
 }
